@@ -5,7 +5,7 @@ FilmFinder::FilmFinder(QWidget *parent)
 {
 	ui.setupUi(this);
 }
-
+//TEST
 FilmFinder::~FilmFinder()
 {
 
