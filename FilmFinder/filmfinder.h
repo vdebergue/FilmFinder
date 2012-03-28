@@ -3,6 +3,9 @@
 
 #include <QtGui/QMainWindow>
 #include "ui_filmfinder.h"
+#include <iostream>
+
+using namespace std;
 
 class FilmFinder : public QMainWindow
 {
@@ -11,6 +14,12 @@ class FilmFinder : public QMainWindow
 public:
     FilmFinder(QWidget *parent = 0);
     ~FilmFinder();
+
+
+private slots:
+    void on_yearSlider_valueChanged(int value);
+
+    void on_actorBox_textChanged();
 
 private:
     Ui::FilmFinderClass ui;
