@@ -13,7 +13,8 @@ FilmFinder::FilmFinder(QWidget *parent)
     //Ou on fait un dock sur le coté
     QDockWidget *dock = new QDockWidget("Palette", this);
     addDockWidget(Qt::RightDockWidgetArea, dock);
-
+    dock->setMinimumWidth(250);
+    dock->setMaximumSize(250,400);
     dock->setWidget(searchWindow);
 
 

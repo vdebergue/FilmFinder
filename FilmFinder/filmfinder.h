@@ -7,6 +7,7 @@
 #include "advancedsearchwindow.h"
 #include <QDockWidget>
 #include<QListWidget>
+#include <QtSql/QSqlQuery>
 
 using namespace std;
 
