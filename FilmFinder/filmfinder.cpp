@@ -6,11 +6,19 @@ FilmFinder::FilmFinder(QWidget *parent)
     ui.setupUi(this);
     searchWindow = new AdvancedSearchWindow();
 
-
+    //Ou on fait un bouton pour ouvrir une nouvelle fenetre
     QPushButton *advancedSearchButton = new QPushButton(QIcon(":/images/fleche.jpg"),"", this);
-    //advancedSearchButton->addAction(search);
     ui.layout->addWidget(advancedSearchButton);
 
+    //Ou on fait un dock sur le coté
+    QDockWidget *dock = new QDockWidget("Palette", this);
+    addDockWidget(Qt::RightDockWidgetArea, dock);
+
+    dock->setWidget(searchWindow);
+
+
+
+    //Cas de la nouvelle fenetre
     connect(advancedSearchButton, SIGNAL(clicked()), this, SLOT(showAdvancedSearch()));
 
 

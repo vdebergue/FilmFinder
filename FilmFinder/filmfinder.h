@@ -5,6 +5,8 @@
 #include "ui_filmfinder.h"
 #include <iostream>
 #include "advancedsearchwindow.h"
+#include <QDockWidget>
+#include<QListWidget>
 
 using namespace std;
 

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "ui_advancedsearchwindow.h"
 #include <iostream>
+#include <QListWidget>
 
 using namespace std;
 

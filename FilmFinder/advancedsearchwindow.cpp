@@ -6,6 +6,8 @@ AdvancedSearchWindow::AdvancedSearchWindow(QWidget *parent) :
 {
     ui.setupUi(this);
 
+
+
 }
 
 AdvancedSearchWindow::~AdvancedSearchWindow()
