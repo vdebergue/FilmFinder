@@ -8,6 +8,7 @@
 #include <QDockWidget>
 #include<QListWidget>
 #include <QtSql/QSqlQuery>
+#include "filmview.h"
 
 using namespace std;
 
@@ -41,6 +42,7 @@ private slots:
 private:
     Ui::FilmFinderClass ui;
     AdvancedSearchWindow *searchWindow;
+    QDockWidget *dock;
 };
 
 #endif // FILMFINDER_H

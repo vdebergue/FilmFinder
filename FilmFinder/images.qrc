@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/fleche.jpg</file>
+        <file>images/fleche.png</file>
+        <file>images/movie.png</file>
     </qresource>
 </RCC>

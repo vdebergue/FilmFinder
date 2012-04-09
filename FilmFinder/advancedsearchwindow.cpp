@@ -1,11 +1,11 @@
 #include "advancedsearchwindow.h"
 #include "ui_advancedsearchwindow.h"
 
+
 AdvancedSearchWindow::AdvancedSearchWindow(QWidget *parent) :
     QWidget(parent)
 {
     ui.setupUi(this);
-
 
 
 }
@@ -51,3 +51,5 @@ void AdvancedSearchWindow::on_directorBox_textChanged()//Faire une rechercher su
 {
 
 }
+
+

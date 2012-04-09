@@ -1,15 +1,15 @@
 TEMPLATE = app
-TARGET = FilmFinder 
-
-QT        += core gui 
-
-HEADERS   += filmfinder.h \
-    advancedsearchwindow.h
-SOURCES   += main.cpp \
-    filmfinder.cpp \
-    advancedsearchwindow.cpp
-FORMS     += filmfinder.ui \    
-    advancedsearchwindow.ui
-RESOURCES += \
-    images.qrc
-
+TARGET = FilmFinder
+QT += core \
+    gui
+HEADERS += filmview.h \
+    advancedsearchwindow.h \
+    filmfinder.h
+SOURCES += filmview.cpp \
+    advancedsearchwindow.cpp \
+    main.cpp \
+    filmfinder.cpp
+FORMS += filmview.ui \
+    advancedsearchwindow.ui \
+    filmfinder.ui
+RESOURCES += images.qrc

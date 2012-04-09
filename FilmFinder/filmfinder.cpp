@@ -7,16 +7,16 @@ FilmFinder::FilmFinder(QWidget *parent)
     searchWindow = new AdvancedSearchWindow();
 
     //Ou on fait un bouton pour ouvrir une nouvelle fenetre
-    QPushButton *advancedSearchButton = new QPushButton(QIcon(":/images/fleche.jpg"),"", this);
+    QPushButton *advancedSearchButton = new QPushButton(QIcon(":/images/fleche.png"),"", this);
     ui.layout->addWidget(advancedSearchButton);
 
     //Ou on fait un dock sur le coté
-    QDockWidget *dock = new QDockWidget("Palette", this);
+    dock = new QDockWidget("Palette", this);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     dock->setMinimumWidth(250);
     dock->setMaximumSize(250,400);
     dock->setWidget(searchWindow);
-
+    dock->hide();
 
 
     //Cas de la nouvelle fenetre
@@ -37,13 +37,16 @@ FilmFinder::~FilmFinder()
 
 }
 
+//affiche la fenêtre avec les paramètres avancés
 void FilmFinder::showAdvancedSearch()
 {
-        searchWindow->show();
+	dock->show();
 }
 void FilmFinder::search()//On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
     cout<<"search"<<endl;
+    QWidget *film = new FilmView(this);
+    ui.gridLayout->addWidget(film);
 }
 
 void FilmFinder::on_yearSlider_valueChanged(int value){

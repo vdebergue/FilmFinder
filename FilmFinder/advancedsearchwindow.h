@@ -9,8 +9,6 @@
 using namespace std;
 
 
-
-
 class AdvancedSearchWindow : public QWidget
 {
     Q_OBJECT
