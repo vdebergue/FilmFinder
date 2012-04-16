@@ -11,7 +11,7 @@ FilmFinder::FilmFinder(QWidget *parent)
     ui.layout->addWidget(advancedSearchButton);
 
     //Ou on fait un dock sur le coté
-    dock = new QDockWidget("Palette", this);
+    dock = new QDockWidget("Advanced Search", this);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     dock->setMinimumWidth(250);
     dock->setMaximumSize(250,400);
