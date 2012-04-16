@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
-    <height>372</height>
+    <width>979</width>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,24 +59,36 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>769</x>
-      <y>0</y>
+      <x>930</x>
+      <y>10</y>
       <width>41</width>
       <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="layout"/>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>531</width>
-      <height>261</height>
+      <x>0</x>
+      <y>50</y>
+      <width>721</width>
+      <height>341</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout"/>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>719</width>
+       <height>339</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -84,7 +96,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>810</width>
+     <width>979</width>
      <height>21</height>
     </rect>
    </property>

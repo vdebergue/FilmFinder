@@ -30,6 +30,12 @@ FilmFinder::FilmFinder(QWidget *parent)
     connect(searchWindow->ui.timeSlider,SIGNAL(valueChanged(int)),this,SLOT(on_timeSlider_valueChanged(int)));
     connect(searchWindow->ui.timePrecision,SIGNAL(valueChanged(int)),this,SLOT(on_timePrecision_valueChanged(int)));
 
+    //Initialisation de la grille :
+    gridLayout = new QGridLayout;
+    grid_colonne = 0;
+    grid_ligne = 0;
+    ui.scrollAreaWidgetContents->setLayout(gridLayout);
+
 }
 //TEST
 FilmFinder::~FilmFinder()
@@ -46,7 +52,7 @@ void FilmFinder::search()//On effectue notre requete de recherche (à appeler à c
 {
     cout<<"search"<<endl;
     QWidget *film = new FilmView(this);
-    ui.gridLayout->addWidget(film);
+    ajouterFilm(film);
 }
 
 void FilmFinder::on_yearSlider_valueChanged(int value){
@@ -82,6 +88,16 @@ void FilmFinder::on_directorBox_textChanged()//Faire une rechercher sur les réal
 void FilmFinder::on_searchBtn_clicked()//Faire une recherche sur les noms (Noms dans searchBox)
 {
     this->search();
+}
+
+void FilmFinder::ajouterFilm(QWidget * film){
+	gridLayout->addWidget(film,grid_ligne,grid_colonne);
+	grid_colonne++;
+	int nbre_col=GRID_NBRE_COL;
+	if(grid_colonne==nbre_col){
+		grid_ligne++;
+		grid_colonne=0;
+	}
 }
 
 

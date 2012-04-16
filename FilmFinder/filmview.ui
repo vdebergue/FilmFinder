@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>241</width>
-    <height>140</height>
+    <width>219</width>
+    <height>147</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>219</width>
+    <height>147</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>FilmView</string>
@@ -18,8 +24,8 @@
     <rect>
      <x>-1</x>
      <y>-1</y>
-     <width>241</width>
-     <height>141</height>
+     <width>221</width>
+     <height>149</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">

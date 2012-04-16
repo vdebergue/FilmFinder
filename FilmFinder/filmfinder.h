@@ -10,6 +10,8 @@
 #include <QtSql/QSqlQuery>
 #include "filmview.h"
 
+#define GRID_NBRE_COL 3;
+
 using namespace std;
 
 class FilmFinder : public QMainWindow
@@ -20,6 +22,7 @@ public:
     FilmFinder(QWidget *parent = 0);
     ~FilmFinder();
     void search();
+    void ajouterFilm(QWidget * film);
 
 
 private slots:
@@ -43,6 +46,8 @@ private:
     Ui::FilmFinderClass ui;
     AdvancedSearchWindow *searchWindow;
     QDockWidget *dock;
+    QGridLayout *gridLayout;
+    int grid_ligne,grid_colonne;
 };
 
 #endif // FILMFINDER_H
