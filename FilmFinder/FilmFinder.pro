@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = FilmFinder
 QT += core \
-    gui
+    gui \
+    network
 HEADERS += filmview.h \
     advancedsearchwindow.h \
     filmfinder.h
@@ -13,3 +14,4 @@ FORMS += filmview.ui \
     advancedsearchwindow.ui \
     filmfinder.ui
 RESOURCES += images.qrc
+

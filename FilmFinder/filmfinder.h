@@ -9,6 +9,9 @@
 #include<QListWidget>
 #include <QtSql/QSqlQuery>
 #include "filmview.h"
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
 
 #define GRID_NBRE_COL 3;
 
@@ -41,6 +44,8 @@ private slots:
 
     void on_searchBtn_clicked();
 
+    void slotRequestFinished(QNetworkReply *);
+
 
 private:
     Ui::FilmFinderClass ui;
@@ -48,6 +53,7 @@ private:
     QDockWidget *dock;
     QGridLayout *gridLayout;
     int grid_ligne,grid_colonne;
+    QNetworkAccessManager *manager;
 };
 
 #endif // FILMFINDER_H

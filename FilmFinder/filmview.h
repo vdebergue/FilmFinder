@@ -12,6 +12,7 @@ public:
     FilmView(QWidget *parent = 0);
     ~FilmView();
     void populate();
+    void setTitle(QString const &);
 
 private:
     Ui::FilmViewClass ui;

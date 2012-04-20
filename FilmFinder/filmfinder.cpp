@@ -36,6 +36,11 @@ FilmFinder::FilmFinder(QWidget *parent)
     grid_ligne = 0;
     ui.scrollAreaWidgetContents->setLayout(gridLayout);
 
+    //Initialisation du Network Manager :
+    manager = new QNetworkAccessManager(this);
+    //Lorsque la requête est fini, il envoie le signal finished qu'on connecte à un de nos slots pour gérer la réponse
+    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(slotRequestFinished(QNetworkReply*)));
+
 }
 //TEST
 FilmFinder::~FilmFinder()
@@ -50,9 +55,27 @@ void FilmFinder::showAdvancedSearch()
 }
 void FilmFinder::search()//On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
-    cout<<"search"<<endl;
-    QWidget *film = new FilmView(this);
-    ajouterFilm(film);
+	cout<<"search ..."<<endl;
+	/*QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost"); // L'ip du host
+    db.setUserName("root"); // Ton login
+    db.setPassword(""); // Ton password
+    db.setDatabaseName("mydb"); //Le nom de ta database
+
+    cout<<"Base SQL : "<< db.open() <<endl;
+    QSqlQuery query;
+    query.exec("SELECT * FROM td_film WHERE titre LIKE '%star%' ;");
+    while(query.next()){
+    	QWidget *film = new FilmView(this);
+    	ajouterFilm(film);
+    }
+    db.close();
+    */
+	QUrl url = new QUrl("http://localhost/FilmFinder/film.php");
+	//On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
+	//Il enverra la requête à slotRequestFinished
+	 manager->get(QNetworkRequest(url));
+
 }
 
 void FilmFinder::on_yearSlider_valueChanged(int value){
@@ -100,4 +123,11 @@ void FilmFinder::ajouterFilm(QWidget * film){
 	}
 }
 
-
+//Traite la page renvoyée par la recherche
+void FilmFinder::slotRequestFinished(QNetworkReply * reply){
+	QString rep= reply->readAll();
+	cout <<"Réponse : " <<rep.toStdString() <<endl;
+	FilmView *film = new FilmView();
+	film->setTitle(rep);
+	ajouterFilm(film);
+}

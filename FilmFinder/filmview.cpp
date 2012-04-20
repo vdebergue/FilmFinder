@@ -21,3 +21,7 @@ void FilmView::populate(){
 	ui.label_director->setText("Réalisateur: ");
 	ui.label_image->setPixmap(QPixmap("images/movie.png"));
 }
+
+void FilmView::setTitle(QString const & titre){
+	ui.label_nom_film->setText(titre);
+}
