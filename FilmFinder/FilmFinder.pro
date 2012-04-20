@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = FilmFinder
 QT += core \
     gui \
-    network
+    network \
+    script
 HEADERS += filmview.h \
     advancedsearchwindow.h \
     filmfinder.h

@@ -12,6 +12,8 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
+#include <QScriptEngine>
+#include <QScriptValueIterator>
 
 #define GRID_NBRE_COL 3;
 
@@ -26,6 +28,7 @@ public:
     ~FilmFinder();
     void search();
     void ajouterFilm(QWidget * film);
+    void viderGrille();
 
 
 private slots:
