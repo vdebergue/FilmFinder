@@ -30,6 +30,14 @@ public:
     void ajouterFilm(QWidget * film);
     void viderGrille();
 
+    int year;
+    int yearPrecision;
+    QString actor;
+    int time;
+    int timePrecision;
+    QString director;
+    QString title;
+
 
 private slots:
     void showAdvancedSearch();

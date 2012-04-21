@@ -13,6 +13,9 @@ public:
     ~FilmView();
     void populate();
     void setTitle(QString const &);
+    void setYear(QString const &);
+    void setTime(QString const &);
+    void setActeurs(QList<QString>);
 
 private:
     Ui::FilmViewClass ui;

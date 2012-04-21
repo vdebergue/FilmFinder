@@ -60,27 +60,19 @@ void FilmFinder::showAdvancedSearch() {
 void FilmFinder::search() //On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
 	cout << "search ..." << endl;
-	viderGrille();
-
-	/*QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-	 db.setHostName("localhost"); // L'ip du host
-	 db.setUserName("root"); // Ton login
-	 db.setPassword(""); // Ton password
-	 db.setDatabaseName("mydb"); //Le nom de ta database
-
-	 cout<<"Base SQL : "<< db.open() <<endl;
-	 QSqlQuery query;
-	 query.exec("SELECT * FROM td_film WHERE titre LIKE '%star%' ;");
-	 while(query.next()){
-	 QWidget *film = new FilmView(this);
-	 ajouterFilm(film);
-	 }
-	 db.close();
-	 */
-	QUrl *url = new QUrl("http://localhost/FilmFinder/film.php?q=star");
+    viderGrille();
+    this->year=2011;
+    QString param= "year="+QString::number(this->year);
+    QString urlString="http://localhost/FilmFinder/film.php?"+param;
+    //cout<<urlString.toStdString()<<endl;
+    QUrl* url = new QUrl(urlString);
+    //On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
+    //Il enverra la requête à slotRequestFinished
+    manager->get(QNetworkRequest(*url));
+    /*QUrl *url = new QUrl("http://localhost/FilmFinder/film.php?year=2011");
 	//On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
 	//Il enverra la requête à slotRequestFinished
-	manager->get(QNetworkRequest(*(url)));
+    manager->get(QNetworkRequest(*(url)));*/
 
 }
 
@@ -135,7 +127,7 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
 
 	QScriptValue sc;
 	QScriptEngine engine;
-	sc = engine.evaluate(rep);
+    sc = engine.evaluate(rep);
 
 	//Si on a bien reçu un array
 	if (sc.isArray()) {
@@ -143,12 +135,20 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
 		//On itère sur le tableau
 		while (it.hasNext()) {
 			it.next();
+            FilmView *film = new FilmView();
 			QString titre = it.value().property("titre").toString();
+            QString annee = it.value().property("annee").toString();
+            QString duree = it.value().property("duree").toString();
 			if (titre != "") {
-				FilmView *film = new FilmView();
 				film->setTitle(titre);
-				ajouterFilm(film);
 			}
+            if (annee != "") {
+                film->setYear(annee);
+            }
+            if (duree != "") {
+                film->setTime(duree);
+            }
+            ajouterFilm(film);
 		}
 	}
 }
