@@ -9,24 +9,40 @@
 		$param.='titre="'.$_GET["title"].'"';
 	}
 	/*if(isset($_GET["actor"]) && $_GET["actor"]!=""){
+		if($param!="")
+			$param.=" AND ";
+		$array=explode($_GET["actor"]," ");
 		$param.='actor="'.$_GET["actor"].'"';
-	}
-	if(isset($_GET["title"]) && $_GET["title"]!=""){
+	}*/
+	/*if(isset($_GET["title"]) && $_GET["title"]!=""){
+		if($param!="")
+			$param.=" AND ";
 		$param.='titre="'.$_GET["title"].'"';
 	}*/
 	if(isset($_GET["year"]) && $_GET["year"]!=-1 && $_GET["year"]!=""){
+		if($param!="")
+			$param.=" AND ";
 		$param.="annee=".$_GET["year"];
 	}
 	if(isset($_GET['time']) && $_GET['time']!=-1 && $_GET['time']!=""){
+		if($param!="")
+			$param.=" AND ";
 		$param.="duree=".$_GET['time'];
 	}
 	if($param!=""){
-		$query="SELECT titre,duree,annee,image FROM td_film WHERE ".$param;
+	
+		///Je pense qu'il ne faut pas faire une jointure mais plutot juste les films et pour chaque film créer un tableau ds le tableau pour les acteurs et réalisateurs
+		$query="SELECT titre,duree,annee,image,nom_acteur,prenom_acteur,nom_realisateur,prenom_realisateur,genre FROM td_film NATURAL JOIN td_acteur,td_film_has_acteur ,td_genre,td_film_has_genre,
+		td_realisateur,td_film_has_realisateur
+		WHERE td_film_has_acteur.id_film=td_film.id_film AND td_film_has_acteur.id_acteur=td_acteur.id_acteur AND 
+		td_film_has_realisateur.id_film=td_film.id_film AND td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND 
+		td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;
 		$db->setQuery($query);
 		$db->query();
 		$res = $db->loadAssocList();
+		print_r($res);
 		if($res!=null){
-			echo json_encode($res);
+			echo utf8_encode(json_encode($res));
 		}
 	}
 	else
