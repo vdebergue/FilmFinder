@@ -1,21 +1,38 @@
 <?php
-
-	$year = $_GET["year"];
 	$db=new Database();
 	//Sinon les caractères accentués ne passent pas avec json_encode et toute la valeur est mise à null 
 	$query="SET CHARACTER SET utf8";
 	$db->setQuery($query);
 	$db->query();
-	$param="";
-	if($year!=-1){
-		$param+=$year;
+	$param='';
+	if(isset($_GET["title"]) && $_GET["title"]!=""){
+		$param.='titre="'.$_GET["title"].'"';
 	}
-	$query="SELECT titre,duree,annee,image FROM td_film WHERE annee=$year";
-	$db->setQuery($query);
-	$db->query();
-	$res = $db->loadAssocList();
-
-	echo json_encode($res);
+	/*if(isset($_GET["actor"]) && $_GET["actor"]!=""){
+		$param.='actor="'.$_GET["actor"].'"';
+	}
+	if(isset($_GET["title"]) && $_GET["title"]!=""){
+		$param.='titre="'.$_GET["title"].'"';
+	}*/
+	if(isset($_GET["year"]) && $_GET["year"]!=-1 && $_GET["year"]!=""){
+		$param.="annee=".$_GET["year"];
+	}
+	if(isset($_GET['time']) && $_GET['time']!=-1 && $_GET['time']!=""){
+		$param.="duree=".$_GET['time'];
+	}
+	if($param!=""){
+		$query="SELECT titre,duree,annee,image FROM td_film WHERE ".$param;
+		$db->setQuery($query);
+		$db->query();
+		$res = $db->loadAssocList();
+		if($res!=null){
+			echo json_encode($res);
+		}
+	}
+	else
+		$query="SELECT titre,duree,annee,image FROM td_film";
+	
+	
 
 
 // function defination to convert array to xml
