@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>225</width>
-    <height>202</height>
+    <width>271</width>
+    <height>226</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -24,8 +24,8 @@
     <rect>
      <x>-1</x>
      <y>-1</y>
-     <width>232</width>
-     <height>202</height>
+     <width>271</width>
+     <height>231</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -109,7 +109,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Réalisateur :</string>
+           <string>Réalisateurs :</string>
           </property>
          </widget>
         </item>

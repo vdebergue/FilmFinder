@@ -161,6 +161,32 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             QString titre = it.value().property("titre").toString();
             QString annee = it.value().property("annee").toString();
             QString duree = it.value().property("duree").toString();
+            if(it.value().property("actor").isArray()){
+                QScriptValueIterator it_actor(it.value().property("actor"));
+                QList<QString> acteurs;
+
+                while(it_actor.hasNext()){
+                    it_actor.next();
+                    acteurs.append(it_actor.value().property("prenom_acteur").toString()+ " " +
+                                   it_actor.value().property("nom_acteur").toString());
+
+                }
+                //cout<<acteurs.size()<<endl;
+                film->setActeurs(acteurs);
+            }
+            if(it.value().property("director").isArray()){
+                QScriptValueIterator it_director(it.value().property("director"));
+                QList<QString> directors;
+
+                while(it_director.hasNext()){
+                    it_director.next();
+                    directors.append(it_director.value().property("prenom_realisateur").toString()+ " " +
+                                   it_director.value().property("nom_realisateur").toString());
+
+                }
+                //cout<<acteurs.size()<<endl;
+                film->setDirectors(directors);
+            }
             if (titre != "") {
                 film->setTitle(titre);
             }

@@ -3,6 +3,9 @@
 
 #include <QtGui/QWidget>
 #include "ui_filmview.h"
+#include <iostream>
+
+using namespace std;
 
 class FilmView : public QWidget
 {
@@ -16,6 +19,7 @@ public:
     void setYear(QString const &);
     void setTime(QString const &);
     void setActeurs(QList<QString>);
+    void setDirectors(QList<QString>);
 
 private:
     Ui::FilmViewClass ui;
