@@ -74,6 +74,8 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     param+= "year="+QString::number(this->year);
     param+= "&title="+this->title;
     param+= "&time="+QString::number(this->time);
+    param+= "&actor="+this->actor;
+    param+= "&director="+this->director;
     QString urlString="http://localhost/FilmFinder/film.php?"+param;
     cout<<urlString.toStdString()<<endl;
     QUrl* url = new QUrl(urlString);
