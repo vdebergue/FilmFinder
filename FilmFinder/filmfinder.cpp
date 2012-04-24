@@ -4,6 +4,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
     QMainWindow(parent) {
     ui.setupUi(this);
     searchWindow = new AdvancedSearchWindow();
+    setWindowTitle("FilmFinder");
 
     this->title="";
     this->actor="";
@@ -14,9 +15,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
     this->timePrecision=-1;
 
     //Ou on fait un bouton pour ouvrir une nouvelle fenetre
-    QPushButton *advancedSearchButton = new QPushButton(
-                QIcon(":/images/fleche.png"), "", this);
-    ui.layout->addWidget(advancedSearchButton);
+    QPushButton *advancedSearchButton = ui.pushButton;
 
     //Ou on fait un dock sur le coté
     dock = new QDockWidget("Advanced Search", this);
@@ -62,6 +61,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
     ui.searching->setMovie(anim);
     anim->start();
     ui.searching->hide();
+
 }
 //TEST
 FilmFinder::~FilmFinder() {
@@ -70,7 +70,8 @@ FilmFinder::~FilmFinder() {
 
 //affiche la fenêtre avec les paramètres avancés
 void FilmFinder::showAdvancedSearch() {
-    dock->show();
+	if(dock->isHidden()) dock->show();
+	else dock->hide();
 }
 void FilmFinder::search() //On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
@@ -205,7 +206,9 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             if (duree != "") {
                 film->setTime(duree);
             }
-            ajouterFilm(film);
+            if(titre != ""){
+            	ajouterFilm(film);
+            }
         }
 
     }
