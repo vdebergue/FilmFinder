@@ -55,6 +55,13 @@ FilmFinder::FilmFinder(QWidget *parent) :
     connect(manager, SIGNAL(finished(QNetworkReply*)), this,
             SLOT(slotRequestFinished(QNetworkReply*)));
 
+    //Searching wheel :
+    QMovie *anim = new QMovie(":/images/wheel.gif");
+    QSize *size = new QSize(30,30);
+    anim->setScaledSize(*(size));
+    ui.searching->setMovie(anim);
+    anim->start();
+    ui.searching->hide();
 }
 //TEST
 FilmFinder::~FilmFinder() {
@@ -68,6 +75,8 @@ void FilmFinder::showAdvancedSearch() {
 void FilmFinder::search() //On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
     cout << "search ..." << endl;
+    ui.searching->show();
+
     viderGrille();
     //this->year=2011;
     QString param= "";
@@ -200,6 +209,7 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
         }
 
     }
+    ui.searching->hide();
 
 }
 

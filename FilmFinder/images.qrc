@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>images/fleche.png</file>
         <file>images/movie.png</file>
+        <file>images/wheel.gif</file>
     </qresource>
 </RCC>

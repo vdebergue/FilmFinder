@@ -14,6 +14,7 @@
 #include <QtNetwork/QNetworkReply>
 #include <QScriptEngine>
 #include <QScriptValueIterator>
+#include <QMovie>
 
 #define GRID_NBRE_COL 3;
 
