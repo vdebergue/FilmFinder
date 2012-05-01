@@ -32,15 +32,34 @@
 	if($param!=""){
 	
 		///Je pense qu'il ne faut pas faire une jointure mais plutot juste les films et pour chaque film créer un tableau ds le tableau pour les acteurs et réalisateurs
-		$query="SELECT titre,duree,annee,image,nom_acteur,prenom_acteur,nom_realisateur,prenom_realisateur,genre FROM td_film NATURAL JOIN td_acteur,td_film_has_acteur ,td_genre,td_film_has_genre,
+		/*$query="SELECT titre,duree,annee,image,nom_acteur,prenom_acteur,nom_realisateur,prenom_realisateur,genre FROM td_film NATURAL JOIN td_acteur,td_film_has_acteur ,td_genre,td_film_has_genre,
 		td_realisateur,td_film_has_realisateur
 		WHERE td_film_has_acteur.id_film=td_film.id_film AND td_film_has_acteur.id_acteur=td_acteur.id_acteur AND 
 		td_film_has_realisateur.id_film=td_film.id_film AND td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND 
-		td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;
+		td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;*/
+		$query="SELECT td_film.id_film,titre,duree,annee,image,genre FROM td_film NATURAL JOIN td_genre,td_film_has_genre
+		WHERE td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;
 		$db->setQuery($query);
 		$db->query();
 		$res = $db->loadAssocList();
-		print_r($res);
+		//print_r(sizeof($res));
+		for ($i=0;$i<sizeof($res);$i++){
+			$actor_query="SELECT nom_acteur,prenom_acteur FROM td_acteur NATURAL JOIN td_film_has_acteur
+			WHERE td_film_has_acteur.id_acteur=td_acteur.id_acteur AND id_film=".$res[$i]['id_film'];
+			$db->setQuery($actor_query);
+			$db->query();
+			$actor_res=$db->loadAssocList();
+			$res[$i]["actor"]=$actor_res;
+			
+			$director_query="SELECT nom_realisateur,prenom_realisateur FROM td_realisateur NATURAL JOIN td_film_has_realisateur
+			WHERE td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND id_film=".$res[$i]['id_film'];
+			$db->setQuery($director_query);
+			$db->query();
+			$director_res=$db->loadAssocList();
+			$res[$i]["director"]=$director_res;
+			
+		}
+		//print_r($res);
 		if($res!=null){
 			echo utf8_encode(json_encode($res));
 		}
