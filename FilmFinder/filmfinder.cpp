@@ -86,7 +86,7 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     param+= "&time="+QString::number(this->time);
     param+= "&actor="+this->actor;
     param+= "&director="+this->director;
-    QString urlString="http://localhost/FilmFinder/film.php?"+param;
+    QString urlString="http://perso.telecom-paristech.fr/~oudet/film.php?"+param;
     cout<<urlString.toStdString()<<endl;
     QUrl* url = new QUrl(urlString);
     //On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
