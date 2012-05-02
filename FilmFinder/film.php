@@ -37,8 +37,8 @@
 		WHERE td_film_has_acteur.id_film=td_film.id_film AND td_film_has_acteur.id_acteur=td_acteur.id_acteur AND 
 		td_film_has_realisateur.id_film=td_film.id_film AND td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND 
 		td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;*/
-		$query="SELECT td_film.id_film,titre,duree,annee,image,genre FROM td_film NATURAL JOIN td_genre,td_film_has_genre
-		WHERE td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;
+		$query="SELECT td_film.id_film,titre,duree,annee,image FROM td_film
+		WHERE ".$param;
 		$db->setQuery($query);
 		$db->query();
 		$res = $db->loadAssocList();
@@ -50,6 +50,13 @@
 			$db->query();
 			$actor_res=$db->loadAssocList();
 			$res[$i]["actor"]=$actor_res;
+			
+			$genre_query="SELECT genre FROM td_genre NATURAL JOIN td_film_has_genre
+			WHERE td_film_has_genre.id_genre=td_genre.id_genre AND id_film=".$res[$i]['id_film'];
+			$db->setQuery($genre_query);
+			$db->query();
+			$genre_res=$db->loadAssocList();
+			$res[$i]["genre"]=$genre_res;
 			
 			$director_query="SELECT nom_realisateur,prenom_realisateur FROM td_realisateur NATURAL JOIN td_film_has_realisateur
 			WHERE td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND id_film=".$res[$i]['id_film'];
