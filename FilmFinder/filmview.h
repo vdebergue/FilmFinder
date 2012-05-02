@@ -7,6 +7,8 @@
 
 using namespace std;
 
+ const QString url ="http://perso.telecom-paristech.fr/~oudet/filmfinder/images/";
+
 class FilmView : public QWidget
 {
     Q_OBJECT
@@ -18,8 +20,11 @@ public:
     void setTitle(QString const &);
     void setYear(QString const &);
     void setTime(QString const &);
+    void setImage(QString const &);
     void setActeurs(QList<QString>);
     void setDirectors(QList<QString>);
+
+
 
 private:
     Ui::FilmViewClass ui;

@@ -103,9 +103,9 @@ class Database
 	function __construct()
 	{
 		$this->_host = "localhost"; 
-		$this->_user = "root";
-		$this->_password = "";
-		$this->_db = "filmfinder";
+		$this->_user = "poudet";
+		$this->_password = "6fcf0004";
+		$this->_db = "poudet";
 		
 		$this->_dbc = mysqli_connect( $this->_host, $this->_user, $this->_password, $this->_db ) or die("Impossible de se connecter à la base de donnees". mysqli_connect_error());
 	}

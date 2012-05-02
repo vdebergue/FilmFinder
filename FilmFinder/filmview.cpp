@@ -20,7 +20,7 @@ void FilmView::populate(){
     ui.label_annee->setText("");
     ui.label_director->setText("");
     ui.label_duree->setText("");
-	ui.label_image->setPixmap(QPixmap("images/movie.png"));
+    ui.label_image->setPixmap(QPixmap("images/movie.png"));
 }
 
 void FilmView::setTitle(QString const & titre){
@@ -32,6 +32,10 @@ void FilmView::setYear(QString const & year){
 void FilmView::setTime(QString const & time){
 
     ui.label_duree->setText(time);
+}
+void FilmView::setImage(QString const & image){
+    cout <<(url+image).toStdString()<<endl;
+    ui.label_image->setPixmap(QPixmap(url+image));
 }
 void FilmView::setActeurs(QList<QString> acteurs){
     QString text="";

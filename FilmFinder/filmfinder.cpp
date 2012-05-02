@@ -86,7 +86,7 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     param+= "&time="+QString::number(this->time);
     param+= "&actor="+this->actor;
     param+= "&director="+this->director;
-    QString urlString="http://perso.telecom-paristech.fr/~oudet/film.php?"+param;
+    QString urlString="http://perso.telecom-paristech.fr/~oudet/filmfinder/film.php?"+param;
     cout<<urlString.toStdString()<<endl;
     QUrl* url = new QUrl(urlString);
     //On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
@@ -171,6 +171,7 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             QString titre = it.value().property("titre").toString();
             QString annee = it.value().property("annee").toString();
             QString duree = it.value().property("duree").toString();
+            QString image = it.value().property("image").toString();
             if(it.value().property("actor").isArray()){
                 QScriptValueIterator it_actor(it.value().property("actor"));
                 QList<QString> acteurs;
@@ -205,6 +206,9 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             }
             if (duree != "") {
                 film->setTime(duree);
+            }
+            if (image != "") {
+                film->setImage(image);
             }
             if(titre != ""){
             	ajouterFilm(film);
