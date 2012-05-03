@@ -16,6 +16,7 @@ class AdvancedSearchWindow : public QWidget
 public:
     explicit AdvancedSearchWindow(QWidget *parent = 0);
     ~AdvancedSearchWindow();
+    void setNumberResult(int number);
 
 private slots:
     void on_yearSlider_valueChanged(int value);

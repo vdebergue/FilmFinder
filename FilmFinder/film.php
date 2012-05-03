@@ -6,7 +6,7 @@
 	$db->query();
 	$param='';
 	if(isset($_GET["title"]) && $_GET["title"]!=""){
-		$param.='titre="'.$_GET["title"].'"';
+		$param.='titre LIKE "%'.$_GET["title"].'%"';
 	}
 	/*if(isset($_GET["actor"]) && $_GET["actor"]!=""){
 		if($param!="")

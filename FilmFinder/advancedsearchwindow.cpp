@@ -52,4 +52,8 @@ void AdvancedSearchWindow::on_directorBox_textChanged()//Faire une rechercher su
 
 }
 
+void AdvancedSearchWindow::setNumberResult(int number){
+	QString nombre(number);
+	ui.resultNumber->setText(nombre);
+}
 

@@ -28,7 +28,9 @@ FilmFinder::FilmFinder(QWidget *parent) :
     //Cas de la nouvelle fenetre
     connect(advancedSearchButton, SIGNAL(clicked()), this,
             SLOT(showAdvancedSearch()));
+    connect(ui.searchBox, SIGNAL(returnPressed()), this, SLOT(onEnterPressed()));
 
+    //Fenetre de recherche avancée
     connect(searchWindow->ui.actorBox, SIGNAL(textChanged()), this,
             SLOT(on_actorBox_textChanged()));
     connect(searchWindow->ui.yearSlider, SIGNAL(valueChanged(int)), this,
@@ -41,6 +43,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
             SLOT(on_timeSlider_valueChanged(int)));
     connect(searchWindow->ui.timePrecision, SIGNAL(valueChanged(int)), this,
             SLOT(on_timePrecision_valueChanged(int)));
+
 
     //Initialisation de la grille :
     gridLayout = new QGridLayout;
@@ -92,6 +95,7 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     //On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
     //Il enverra la requête à slotRequestFinished
     manager->get(QNetworkRequest(*url));
+
     /*QUrl *url = new QUrl("http://localhost/FilmFinder/film.php?year=2011");
     //On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
     //Il enverra la requête à slotRequestFinished
@@ -137,9 +141,14 @@ void FilmFinder::on_directorBox_textChanged() //Faire une rechercher sur les réa
 
 void FilmFinder::on_searchBtn_clicked() //Faire une recherche sur les noms (Noms dans searchBox)
 {
-    this->title=this->ui.searchBox->toPlainText();
+    this->title=this->ui.searchBox->text();
     cout<<this->title.toStdString()<<endl;
     this->search();
+}
+
+void FilmFinder::onEnterPressed(){
+	this->on_searchBtn_clicked();
+	cout<<"Enter pressed"<<endl;
 }
 
 void FilmFinder::ajouterFilm(QWidget * film) {
@@ -154,19 +163,21 @@ void FilmFinder::ajouterFilm(QWidget * film) {
 
 //Traite la page renvoyée par la recherche
 void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
-    QString rep = reply->readAll();
+	QString rep = reply->readAll();
     cout << "Réponse : " << rep.toStdString() << endl;
 
     QScriptValue sc;
     QScriptEngine engine;
     sc = engine.evaluate(rep);
+    int number = 0;
 
     //Si on a bien reçu un array
     if (sc.isArray()) {
         QScriptValueIterator it(sc);
         //On itère sur le tableau
-        while (it.hasNext()) {//Une itération de trop a chaque fois. Chercher pk!
+        while (it.hasNext()) {
             it.next();
+            number++;
             FilmView *film = new FilmView();
             QString titre = it.value().property("titre").toString();
             QString annee = it.value().property("annee").toString();
@@ -207,7 +218,7 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             if (duree != "") {
                 film->setTime(duree);
             }
-            if (image != "") {
+            if (image != "" && image != "null") {
                 film->setImage(image);
             }
             if(titre != ""){
@@ -216,8 +227,8 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
         }
 
     }
+    searchWindow->setNumberResult(number);
     ui.searching->hide();
-
 }
 
 //Fonction pour vider la grille des précédents résultats

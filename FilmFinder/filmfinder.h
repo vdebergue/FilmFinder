@@ -56,6 +56,8 @@ private slots:
 
     void on_searchBtn_clicked();
 
+    void onEnterPressed();
+
     void slotRequestFinished(QNetworkReply *);
 
 
