@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>221</width>
-    <height>308</height>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>0</x>
      <y>0</y>
      <width>219</width>
-     <height>308</height>
+     <height>371</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -316,6 +316,13 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="clearButton">
+      <property name="text">
+       <string>Remettre à zéro</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

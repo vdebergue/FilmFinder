@@ -43,6 +43,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
             SLOT(on_timeSlider_valueChanged(int)));
     connect(searchWindow->ui.timePrecision, SIGNAL(valueChanged(int)), this,
             SLOT(on_timePrecision_valueChanged(int)));
+    connect(searchWindow->ui.clearButton, SIGNAL(clicked()),this,SLOT(on_clearButton_clicked()));
 
 
     //Initialisation de la grille :
@@ -78,7 +79,7 @@ void FilmFinder::showAdvancedSearch() {
 }
 void FilmFinder::search() //On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
-    cout << "search ..." << endl;
+    //cout << "search ..." << endl;
     ui.searching->show();
 
     viderGrille();
@@ -87,6 +88,8 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     param+= "year="+QString::number(this->year);
     param+= "&title="+this->title;
     param+= "&time="+QString::number(this->time);
+    param+= "&yearPrecision="+QString::number(this->yearPrecision);
+    param+= "&timePrecision="+QString::number(this->timePrecision);
     param+= "&actor="+this->actor;
     param+= "&director="+this->director;
     QString urlString="http://perso.telecom-paristech.fr/~oudet/filmfinder/film.php?"+param;
@@ -96,16 +99,10 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     //Il enverra la requête à slotRequestFinished
     manager->get(QNetworkRequest(*url));
 
-    /*QUrl *url = new QUrl("http://localhost/FilmFinder/film.php?year=2011");
-    //On donne au manager une reqête à effectuer. Lorsque cette requête est finie,
-    //Il enverra la requête à slotRequestFinished
-    manager->get(QNetworkRequest(*(url)));*/
-
 }
 
 void FilmFinder::on_yearSlider_valueChanged(int value) {
     this->year=value;
-    // cout<<QString::number(this->year).toStdString()<<endl;
     this->search();
 }
 
@@ -151,6 +148,25 @@ void FilmFinder::onEnterPressed(){
 	cout<<"Enter pressed"<<endl;
 }
 
+void FilmFinder::on_clearButton_clicked(){
+    searchWindow->ui.actorBox->clear();
+    searchWindow->ui.directorBox->clear();
+    searchWindow->ui.resultNumber->clear();
+    searchWindow->ui.timePrecision->clear();
+    searchWindow->ui.yearPrecision->clear();
+    searchWindow->ui.yearSlider->setValue(1920);
+    searchWindow->ui.timeSlider->setValue(0);
+    this->title="";
+    this->actor="";
+    this->director="";
+    this->year=-1;
+    this->yearPrecision=-1;
+    this->time=-1;
+    this->timePrecision=-1;
+    this->viderGrille();
+
+}
+
 void FilmFinder::ajouterFilm(QWidget * film) {
     gridLayout->addWidget(film, grid_ligne, grid_colonne);
     grid_colonne++;
@@ -177,7 +193,7 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
         //On itère sur le tableau
         while (it.hasNext()) {
             it.next();
-            number++;
+
             FilmView *film = new FilmView();
             QString titre = it.value().property("titre").toString();
             QString annee = it.value().property("annee").toString();
@@ -222,12 +238,14 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
                 film->setImage(image);
             }
             if(titre != ""){
+                number++;
             	ajouterFilm(film);
             }
         }
 
     }
-    searchWindow->setNumberResult(number);
+
+    searchWindow->ui.resultNumber->setText(QString::number(number));
     ui.searching->hide();
 }
 

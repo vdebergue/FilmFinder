@@ -58,6 +58,8 @@ private slots:
 
     void onEnterPressed();
 
+    void on_clearButton_clicked();
+
     void slotRequestFinished(QNetworkReply *);
 
 

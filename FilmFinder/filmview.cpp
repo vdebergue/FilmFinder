@@ -40,14 +40,14 @@ void FilmView::setImage(QString const & image){
 void FilmView::setActeurs(QList<QString> acteurs){
     QString text="";
     for(int i=0;i<acteurs.size();i++){
-        text+=acteurs.at(i)+" \n ";
+        text+=acteurs.at(i)+"\n";
     }
     ui.label_acteurs->setText(text);
 }
 void FilmView::setDirectors(QList<QString> directors){
     QString text="";
     for(int i=0;i<directors.size();i++){
-        text+=directors.at(i)+" \n ";
+        text+=directors.at(i)+"\n";
     }
     ui.label_director->setText(text);
 }

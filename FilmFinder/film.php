@@ -8,35 +8,34 @@
 	if(isset($_GET["title"]) && $_GET["title"]!=""){
 		$param.='titre LIKE "%'.$_GET["title"].'%"';
 	}
-	/*if(isset($_GET["actor"]) && $_GET["actor"]!=""){
-		if($param!="")
-			$param.=" AND ";
-		$array=explode($_GET["actor"]," ");
-		$param.='actor="'.$_GET["actor"].'"';
-	}*/
-	/*if(isset($_GET["title"]) && $_GET["title"]!=""){
-		if($param!="")
-			$param.=" AND ";
-		$param.='titre="'.$_GET["title"].'"';
-	}*/
+	
+	
 	if(isset($_GET["year"]) && $_GET["year"]!=-1 && $_GET["year"]!=""){
-		if($param!="")
+		if($param!=""){
 			$param.=" AND ";
-		$param.="annee=".$_GET["year"];
+		}
+		if(isset($_GET["yearPrecision"]) && $_GET["yearPrecision"]!="" && $_GET["yearPrecision"]!="-1"){
+			if($param!="")
+				$param.=" AND ";
+			$param.="annee BETWEEN ".($_GET["year"]- $_GET["yearPrecision"])." AND ".($_GET["year"]+ $_GET["yearPrecision"]);
+		}else{		
+			$param.="annee=".$_GET["year"];
+		}
 	}
 	if(isset($_GET['time']) && $_GET['time']!=-1 && $_GET['time']!=""){
 		if($param!="")
 			$param.=" AND ";
-		$param.="duree=".$_GET['time'];
+		if(isset($_GET["timePrecision"]) && $_GET["timePrecision"]!="" && $_GET["timePrecision"]!="-1"){
+			if($param!="")
+				$param.=" AND ";
+			$param.="duree BETWEEN ".($_GET["time"]- $_GET["timePrecision"])." AND ".($_GET["time"]+ $_GET["timePrecision"]);
+		}else{		
+			$param.="duree=".$_GET['time'];
+		}
+		
 	}
 	if($param!=""){
 	
-		///Je pense qu'il ne faut pas faire une jointure mais plutot juste les films et pour chaque film créer un tableau ds le tableau pour les acteurs et réalisateurs
-		/*$query="SELECT titre,duree,annee,image,nom_acteur,prenom_acteur,nom_realisateur,prenom_realisateur,genre FROM td_film NATURAL JOIN td_acteur,td_film_has_acteur ,td_genre,td_film_has_genre,
-		td_realisateur,td_film_has_realisateur
-		WHERE td_film_has_acteur.id_film=td_film.id_film AND td_film_has_acteur.id_acteur=td_acteur.id_acteur AND 
-		td_film_has_realisateur.id_film=td_film.id_film AND td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND 
-		td_film_has_genre.id_film=td_film.id_film AND td_film_has_genre.id_genre=td_genre.id_genre AND ".$param;*/
 		$query="SELECT td_film.id_film,titre,duree,annee,image FROM td_film
 		WHERE ".$param;
 		$db->setQuery($query);
@@ -75,27 +74,6 @@
 		$query="SELECT titre,duree,annee,image FROM td_film";
 	
 	
-
-
-// function defination to convert array to xml
-function array_to_xml($info, &$xml) {
-    foreach($info as $key => $value) {
-		//$xml->addChild("film","$value");
-        if(is_array($value)) {
-            if(!is_numeric($key)){
-                $subnode = $xml->addChild("$key");
-                array_to_xml($value, $subnode);
-            }
-            else{
-				$subnode = $xml->addChild("film");
-                array_to_xml($value, $subnode);
-            }
-        }
-        else {
-            $xml->addChild("$key","$value");
-        }
-    }
-}
 
 class Database
 {

@@ -21,17 +21,8 @@ public:
 private slots:
     void on_yearSlider_valueChanged(int value);
 
-    void on_actorBox_textChanged();
-
     void on_timeSlider_valueChanged(int value);
 
-    void on_directorBox_textChanged();
-
-    void on_timePrecision_valueChanged(int arg1);
-
-    void on_yearPrecision_valueChanged(int arg1);
-
-    
 public:
     Ui::AdvancedSearchWindow ui;
 };
