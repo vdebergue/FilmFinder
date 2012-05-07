@@ -4,6 +4,8 @@
 #include <QtGui/QWidget>
 #include "ui_filmview.h"
 #include <iostream>
+#include <QUrl>
+#include <QtWebKit/QWebView>
 
 using namespace std;
 

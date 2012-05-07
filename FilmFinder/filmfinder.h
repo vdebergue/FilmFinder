@@ -16,7 +16,7 @@
 #include <QScriptValueIterator>
 #include <QMovie>
 
-#define GRID_NBRE_COL 3;
+#define GRID_NBRE_COL 2;
 
 using namespace std;
 

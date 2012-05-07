@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
+    <width>375</width>
     <height>370</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>350</width>
+    <width>375</width>
     <height>370</height>
    </size>
   </property>
@@ -24,7 +24,7 @@
     <rect>
      <x>-1</x>
      <y>-1</y>
-     <width>301</width>
+     <width>351</width>
      <height>291</height>
     </rect>
    </property>
@@ -33,29 +33,47 @@
      <number>1</number>
     </property>
     <item>
-     <widget class="QLabel" name="label_image">
-      <property name="maximumSize">
+     <widget class="QWebView" name="image_view">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>125</height>
+        <width>160</width>
+        <height>213</height>
        </size>
       </property>
-      <property name="text">
-       <string/>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>213</height>
+       </size>
       </property>
-      <property name="pixmap">
-       <pixmap resource="images.qrc">:/images/movie.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="margin">
-       <number>5</number>
+      <property name="url">
+       <url>
+        <string>about:blank</string>
+       </url>
       </property>
      </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>10</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -212,8 +230,13 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="images.qrc"/>
- </resources>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
  <connections/>
 </ui>

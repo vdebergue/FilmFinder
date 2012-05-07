@@ -3,7 +3,8 @@ TARGET = FilmFinder
 QT += core \
     gui \
     network \
-    script
+    script \
+    webkit
 HEADERS += filmview.h \
     advancedsearchwindow.h \
     filmfinder.h
