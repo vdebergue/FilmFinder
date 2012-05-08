@@ -24,14 +24,17 @@ void FilmView::populate(){
 }
 
 void FilmView::setTitle(QString const & titre){
-	ui.label_nom_film->setText(titre);
+    ui.label_nom_film->setText("<b style='font-size:12px'>"+titre+"</b>");
+    ui.label_nom_film->setAlignment(Qt::AlignCenter);
 }
 void FilmView::setYear(QString const & year){
     ui.label_annee->setText(year);
+    ui.label_director->setAlignment(Qt::AlignCenter);
 }
 void FilmView::setTime(QString const & time){
 
     ui.label_duree->setText(time);
+    ui.label_director->setAlignment(Qt::AlignCenter);
 }
 void FilmView::setImage(QString const & image){
     cout <<(url+image).toStdString()<<endl;
@@ -45,6 +48,7 @@ void FilmView::setActeurs(QList<QString> acteurs){
         text+=acteurs.at(i)+"\n";
     }
     ui.label_acteurs->setText(text);
+    ui.label_director->setAlignment(Qt::AlignCenter);
 }
 void FilmView::setDirectors(QList<QString> directors){
     QString text="";
@@ -52,4 +56,18 @@ void FilmView::setDirectors(QList<QString> directors){
         text+=directors.at(i)+"\n";
     }
     ui.label_director->setText(text);
+    ui.label_director->setAlignment(Qt::AlignCenter);
+}
+
+void FilmView::setGenres(QList<QString> genres){
+    QString text="";
+    for (int i=0;i<genres.size();i++){
+        text+=genres.at(i);
+        cout<<i<<" "<<genres.size()-1<<endl;
+        if (i!=(genres.size()-1)){
+            text+=" , ";
+        }
+    }
+    ui.label_genre->setText("<b>"+text+"</b>");
+    ui.label_genre->setAlignment(Qt::AlignCenter);
 }

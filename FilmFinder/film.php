@@ -34,30 +34,86 @@
 		}
 		
 	}
-	if($param!=""){
 	
-		$query="SELECT td_film.id_film,titre,duree,annee,image FROM td_film
-		WHERE ".$param;
+		if(isset($_GET["actor"]) && $_GET["actor"]!=""){
+			if(strpos($_GET["actor"]," ")!==false){
+				$noms=explode(" ",$_GET["actor"]);
+				$nom1=$noms[0];
+				$nom2=$noms[1];
+				if($param!=''){
+					$param.=" AND ((nom_acteur LIKE '%$nom1%' AND prenom_acteur LIKE '%$nom2%') OR(nom_acteur LIKE '%$nom2%' AND prenom_acteur LIKE '%$nom1%'))";
+						
+				}
+				else{
+					$param.=" ((nom_acteur LIKE '%$nom1%' AND prenom_acteur LIKE '%$nom2%') OR(nom_acteur LIKE '%$nom2%' AND prenom_acteur LIKE '%$nom1%'))";		
+				}
+			}
+			else{
+				$nom=$_GET["actor"];
+				if($param!=''){
+					$param.=" AND (nom_acteur LIKE '%$nom%' OR prenom_acteur LIKE '%$nom%')";
+						
+				}
+				else{
+					$param.=" (nom_acteur LIKE '%$nom%' OR prenom_acteur LIKE '%$nom%')";	
+				}
+			}		
+		}
+		
+		if(isset($_GET["director"]) && $_GET["director"]!=""){
+			if(strpos($_GET["director"]," ")!==false){
+				$noms=explode(" ",$_GET["director"]);
+				$nom1=$noms[0];
+				$nom2=$noms[1];
+				if($param!=''){
+					$param.=" AND ((nom_realisateur LIKE '%$nom1%' AND prenom_realisateur LIKE '%$nom2%') OR(nom_realisateur LIKE '%$nom2%' AND prenom_realisateur LIKE '%$nom1%'))";
+						
+				}
+				else{
+					$param.=" ((nom_realisateur LIKE '%$nom1%' AND prenom_realisateur LIKE '%$nom2%') OR(nom_realisateur LIKE '%$nom2%' AND prenom_realisateur LIKE '%$nom1%'))";		
+				}
+			}
+			else{
+				$nom=$_GET["director"];
+				if($param!=''){
+					$param.=" AND (nom_realisateur LIKE '%$nom%' OR prenom_realisateur LIKE '%$nom%')";
+						
+				}
+				else{
+					$param.=" (nom_realisateur LIKE '%$nom%' OR prenom_realisateur LIKE '%$nom%')";	
+				}
+			}		
+		}
+		
+		$query="SELECT DISTINCT td_film.id_film,titre,duree,annee,image FROM td_film NATURAL JOIN td_film_has_acteur ,td_acteur,td_film_has_realisateur,td_realisateur
+				WHERE (td_film_has_acteur.id_acteur=td_acteur.id_acteur AND td_film_has_acteur.id_film=td_film.id_film)
+				AND (td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND td_film_has_realisateur.id_film=td_film.id_film)
+				AND ".$param." ORDER BY titre";
+			
 		$db->setQuery($query);
 		$db->query();
 		$res = $db->loadAssocList();
 		//print_r(sizeof($res));
 		for ($i=0;$i<sizeof($res);$i++){
-			$actor_query="SELECT nom_acteur,prenom_acteur FROM td_acteur NATURAL JOIN td_film_has_acteur
+			
+			
+			$actor_query="SELECT DISTINCT nom_acteur,prenom_acteur FROM td_acteur NATURAL JOIN td_film_has_acteur
 			WHERE td_film_has_acteur.id_acteur=td_acteur.id_acteur AND id_film=".$res[$i]['id_film'];
+				
+			
 			$db->setQuery($actor_query);
 			$db->query();
 			$actor_res=$db->loadAssocList();
 			$res[$i]["actor"]=$actor_res;
 			
-			$genre_query="SELECT genre FROM td_genre NATURAL JOIN td_film_has_genre
+			$genre_query="SELECT DISTINCT genre FROM td_genre NATURAL JOIN td_film_has_genre
 			WHERE td_film_has_genre.id_genre=td_genre.id_genre AND id_film=".$res[$i]['id_film'];
 			$db->setQuery($genre_query);
 			$db->query();
 			$genre_res=$db->loadAssocList();
 			$res[$i]["genre"]=$genre_res;
 			
-			$director_query="SELECT nom_realisateur,prenom_realisateur FROM td_realisateur NATURAL JOIN td_film_has_realisateur
+			$director_query="SELECT DISTINCT nom_realisateur,prenom_realisateur FROM td_realisateur NATURAL JOIN td_film_has_realisateur
 			WHERE td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND id_film=".$res[$i]['id_film'];
 			$db->setQuery($director_query);
 			$db->query();
@@ -69,9 +125,7 @@
 		if($res!=null){
 			echo utf8_encode(json_encode($res));
 		}
-	}
-	else
-		$query="SELECT titre,duree,annee,image FROM td_film";
+	
 	
 	
 

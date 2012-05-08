@@ -25,6 +25,7 @@ public:
     void setImage(QString const &);
     void setActeurs(QList<QString>);
     void setDirectors(QList<QString>);
+    void setGenres(QList<QString>);
 
 
 

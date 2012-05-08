@@ -74,8 +74,8 @@ FilmFinder::~FilmFinder() {
 
 //affiche la fenêtre avec les paramètres avancés
 void FilmFinder::showAdvancedSearch() {
-	if(dock->isHidden()) dock->show();
-	else dock->hide();
+    if(dock->isHidden()) dock->show();
+    else dock->hide();
 }
 void FilmFinder::search() //On effectue notre requete de recherche (à appeler à chaque modification dans notre recherche avancée)
 {
@@ -144,8 +144,8 @@ void FilmFinder::on_searchBtn_clicked() //Faire une recherche sur les noms (Noms
 }
 
 void FilmFinder::onEnterPressed(){
-	this->on_searchBtn_clicked();
-	cout<<"Enter pressed"<<endl;
+    this->on_searchBtn_clicked();
+    cout<<"Enter pressed"<<endl;
 }
 
 void FilmFinder::on_clearButton_clicked(){
@@ -179,7 +179,8 @@ void FilmFinder::ajouterFilm(QWidget * film) {
 
 //Traite la page renvoyée par la recherche
 void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
-	QString rep = reply->readAll();
+    this->viderGrille();
+    QString rep = reply->readAll();
     cout << "Réponse : " << rep.toStdString() << endl;
 
     QScriptValue sc;
@@ -199,17 +200,21 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             QString annee = it.value().property("annee").toString();
             QString duree = it.value().property("duree").toString();
             QString image = it.value().property("image").toString();
+
             if(it.value().property("actor").isArray()){
                 QScriptValueIterator it_actor(it.value().property("actor"));
                 QList<QString> acteurs;
 
                 while(it_actor.hasNext()){
                     it_actor.next();
-                    acteurs.append(it_actor.value().property("prenom_acteur").toString()+ " " +
-                                   it_actor.value().property("nom_acteur").toString());
+                    if(it_actor.value().property("prenom_acteur").toString()!=""){
+                        acteurs.append(it_actor.value().property("prenom_acteur").toString()+ " " +
+                                       it_actor.value().property("nom_acteur").toString());
+                    }
 
                 }
                 //cout<<acteurs.size()<<endl;
+
                 film->setActeurs(acteurs);
             }
             if(it.value().property("director").isArray()){
@@ -218,12 +223,25 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
 
                 while(it_director.hasNext()){
                     it_director.next();
-                    directors.append(it_director.value().property("prenom_realisateur").toString()+ " " +
-                                   it_director.value().property("nom_realisateur").toString());
+                    if(it_director.value().property("prenom_realisateur").toString()!=""){
+                        directors.append(it_director.value().property("prenom_realisateur").toString()+ " " +
+                                         it_director.value().property("nom_realisateur").toString());
+                    }
 
                 }
-                //cout<<acteurs.size()<<endl;
                 film->setDirectors(directors);
+            }
+            if(it.value().property("genre").isArray()){
+                QScriptValueIterator it_genre(it.value().property("genre"));
+                QList<QString> genres;
+
+                while(it_genre.hasNext()){
+                    it_genre.next();
+                    if(it_genre.value().property("genre").toString()!=""){
+                        genres.append(it_genre.value().property("genre").toString());
+                    }
+                }
+                film->setGenres(genres);
             }
             if (titre != "") {
                 film->setTitle(titre);
@@ -239,7 +257,7 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
             }
             if(titre != ""){
                 number++;
-            	ajouterFilm(film);
+                ajouterFilm(film);
             }
         }
 
