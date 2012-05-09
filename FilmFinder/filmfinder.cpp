@@ -5,6 +5,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
     ui.setupUi(this);
     searchWindow = new AdvancedSearchWindow();
     setWindowTitle("FilmFinder");
+    this->showMaximized();
 
     this->title="";
     this->actor="";
