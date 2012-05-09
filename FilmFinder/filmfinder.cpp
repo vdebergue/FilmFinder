@@ -65,6 +65,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
     ui.searching->setMovie(anim);
     anim->start();
     ui.searching->hide();
+    this->search();
 
 }
 //TEST

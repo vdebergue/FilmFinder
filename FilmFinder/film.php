@@ -84,11 +84,18 @@
 				}
 			}		
 		}
-		
-		$query="SELECT DISTINCT td_film.id_film,titre,duree,annee,image FROM td_film NATURAL JOIN td_film_has_acteur ,td_acteur,td_film_has_realisateur,td_realisateur
+		if($param!=''){
+			$query="SELECT DISTINCT td_film.id_film,titre,duree,annee,image FROM td_film NATURAL JOIN td_film_has_acteur ,td_acteur,td_film_has_realisateur,td_realisateur
 				WHERE (td_film_has_acteur.id_acteur=td_acteur.id_acteur AND td_film_has_acteur.id_film=td_film.id_film)
 				AND (td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND td_film_has_realisateur.id_film=td_film.id_film)
 				AND ".$param." ORDER BY titre";
+		}
+		else{
+			$query="SELECT DISTINCT td_film.id_film,titre,duree,annee,image FROM td_film NATURAL JOIN td_film_has_acteur ,td_acteur,td_film_has_realisateur,td_realisateur
+				WHERE (td_film_has_acteur.id_acteur=td_acteur.id_acteur AND td_film_has_acteur.id_film=td_film.id_film)
+				AND (td_film_has_realisateur.id_realisateur=td_realisateur.id_realisateur AND td_film_has_realisateur.id_film=td_film.id_film)
+				ORDER BY titre";
+		}
 			
 		$db->setQuery($query);
 		$db->query();
