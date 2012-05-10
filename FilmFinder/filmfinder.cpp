@@ -4,10 +4,15 @@ FilmFinder::FilmFinder(QWidget *parent) :
     QMainWindow(parent) {
     ui.setupUi(this);
     searchWindow = new AdvancedSearchWindow();
+
+
+
+
     setWindowTitle("FilmFinder");
     this->showMaximized();
 
     this->title="";
+    this->genre="";
     this->actor="";
     this->director="";
     this->year=-1;
@@ -22,7 +27,7 @@ FilmFinder::FilmFinder(QWidget *parent) :
     dock = new QDockWidget("Advanced Search", this);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     dock->setMinimumWidth(250);
-    dock->setMaximumSize(250, 400);
+    dock->setMaximumSize(250, 450);
     dock->setWidget(searchWindow);
     dock->hide();
 
@@ -45,6 +50,8 @@ FilmFinder::FilmFinder(QWidget *parent) :
     connect(searchWindow->ui.timePrecision, SIGNAL(valueChanged(int)), this,
             SLOT(on_timePrecision_valueChanged(int)));
     connect(searchWindow->ui.clearButton, SIGNAL(clicked()),this,SLOT(on_clearButton_clicked()));
+    connect(searchWindow->ui.genreComboBox, SIGNAL(currentIndexChanged(QString)), this,
+            SLOT(on_genreComboBox_changed(QString)));
 
 
     //Initialisation de la grille :
@@ -94,6 +101,7 @@ void FilmFinder::search() //On effectue notre requete de recherche (à appeler à 
     param+= "&timePrecision="+QString::number(this->timePrecision);
     param+= "&actor="+this->actor;
     param+= "&director="+this->director;
+    param+= "&genre="+this->genre;
     QString urlString="http://perso.telecom-paristech.fr/~oudet/filmfinder/film.php?"+param;
     cout<<urlString.toStdString()<<endl;
     QUrl* url = new QUrl(urlString);
@@ -158,6 +166,7 @@ void FilmFinder::on_clearButton_clicked(){
     searchWindow->ui.yearPrecision->clear();
     searchWindow->ui.yearSlider->setValue(1920);
     searchWindow->ui.timeSlider->setValue(0);
+    this->genre="";
     this->title="";
     this->actor="";
     this->director="";
@@ -166,7 +175,14 @@ void FilmFinder::on_clearButton_clicked(){
     this->time=-1;
     this->timePrecision=-1;
     this->viderGrille();
+    this->search();
 
+}
+
+void FilmFinder::on_genreComboBox_changed(QString arg1){
+    this->genre=arg1;
+    cout<<genre.toStdString()<<endl;
+    this->search();
 }
 
 void FilmFinder::ajouterFilm(QWidget * film) {

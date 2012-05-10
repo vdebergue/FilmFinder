@@ -5,6 +5,11 @@
 #include "ui_advancedsearchwindow.h"
 #include <iostream>
 #include <QListWidget>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QScriptEngine>
+#include <QScriptValueIterator>
 
 using namespace std;
 
@@ -23,8 +28,13 @@ private slots:
 
     void on_timeSlider_valueChanged(int value);
 
+    void slotRequestFinished(QNetworkReply *);
+
 public:
     Ui::AdvancedSearchWindow ui;
+
+private:
+    QNetworkAccessManager *manager;
 };
 
 #endif // ADVANCEDSEARCHWINDOW_H

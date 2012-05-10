@@ -38,6 +38,7 @@ public:
     int timePrecision;
     QString director;
     QString title;
+    QString genre;
 
 
 private slots:
@@ -59,6 +60,8 @@ private slots:
     void onEnterPressed();
 
     void on_clearButton_clicked();
+
+    void on_genreComboBox_changed(QString arg1);
 
     void slotRequestFinished(QNetworkReply *);
 
