@@ -185,6 +185,14 @@ void FilmFinder::slotRequestFinished(QNetworkReply * reply) {
     QString rep = reply->readAll();
     cout << "Réponse : " << rep.toStdString() << endl;
 
+    QString prems = rep.at(0);
+    cout << "premier char : " << prems.toStdString() << endl;
+    if(prems.toStdString() != "[" ){
+    	rep.remove(0,1);
+        cout << "Réponse modifiée: " << rep.toStdString() << endl;
+
+    }
+
     QScriptValue sc;
     QScriptEngine engine;
     sc = engine.evaluate(rep);

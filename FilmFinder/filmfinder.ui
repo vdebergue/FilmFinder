@@ -73,7 +73,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>648</width>
+             <width>640</width>
              <height>414</height>
             </rect>
            </property>
@@ -137,7 +137,13 @@
         </property>
         <property name="icon">
          <iconset resource="images.qrc">
-          <normaloff>:/images/fleche.png</normaloff>:/images/fleche.png</iconset>
+          <normaloff>:/images/Loupe.png</normaloff>:/images/Loupe.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
